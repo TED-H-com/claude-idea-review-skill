@@ -1,5 +1,5 @@
 {
-  "repo": "teddashh/claude-idea-review-skill",
+  "repo": "TED-H-com/claude-idea-review-skill",
   "slug": "claude-idea-review-skill",
   "name": "claude-idea-review-skill",
   "mark": "IR",
@@ -44,7 +44,7 @@
       }
     },
     "secondary": {
-      "href": "https://github.com/teddashh/claude-idea-review-skill",
+      "href": "https://github.com/TED-H-com/claude-idea-review-skill",
       "label": {
         "en": "View source",
         "zh": "查看原始碼"
@@ -271,8 +271,8 @@
           "zh": "用思考個性，而不是模型席位"
         },
         "body": {
-          "en": "The web version, <a href=\"https://teddashh.github.io/ai-brainstorming/\">ai-brainstorming</a>, gives five models a seat each through OpenRouter. Inside Claude Code, four personalities need no extra accounts, and other providers are used only when their CLI answers or you give a key.",
-          "zh": "網頁版的 <a href=\"https://teddashh.github.io/ai-brainstorming/?lang=zh-TW\">ai-brainstorming</a> 透過 OpenRouter 讓五個模型各坐一席。在 Claude Code 裡，四種思考個性不需要額外帳號，其他 provider 只在 CLI 能回應或你提供 key 時才會用到。"
+          "en": "The web version, <a href=\"https://ted-h-com.github.io/ai-brainstorming/\">ai-brainstorming</a>, gives five models a seat each through OpenRouter. Inside Claude Code, four personalities need no extra accounts, and other providers are used only when their CLI answers or you give a key.",
+          "zh": "網頁版的 <a href=\"https://ted-h-com.github.io/ai-brainstorming/?lang=zh-TW\">ai-brainstorming</a> 透過 OpenRouter 讓五個模型各坐一席。在 Claude Code 裡，四種思考個性不需要額外帳號，其他 provider 只在 CLI 能回應或你提供 key 時才會用到。"
         }
       },
       {
@@ -311,14 +311,14 @@
       "zh": "需要 Claude Code 與 Python 3.8 以上。正在執行的 session 不必重開就會載入這個 skill；如果 <code>~/.claude/skills/</code> 是新建立的，執行一次 <code>/reload-skills</code>。"
     },
     "primary": {
-      "href": "https://github.com/teddashh/claude-idea-review-skill/blob/main/README.md#install",
+      "href": "https://github.com/TED-H-com/claude-idea-review-skill/blob/main/README.md#install",
       "label": {
         "en": "Full install guide",
         "zh": "英文 README 完整說明"
       }
     },
     "secondary": {
-      "href": "https://github.com/teddashh/claude-idea-review-skill/blob/main/README.zh-TW.md#安裝",
+      "href": "https://github.com/TED-H-com/claude-idea-review-skill/blob/main/README.zh-TW.md#安裝",
       "label": {
         "en": "中文安裝說明",
         "zh": "中文安裝說明"
@@ -334,7 +334,7 @@
           "en": "Clone into your personal skills folder. For one project only, use that project's .claude/skills/ instead. On Windows, the README has a PowerShell version.",
           "zh": "clone 到個人的 skills 資料夾；只想用在單一專案的話，改放到該專案的 .claude/skills/。Windows 的 PowerShell 版本請看 README。"
         },
-        "code": "git clone \\\n  https://github.com/teddashh/claude-idea-review-skill.git \\\n  ~/.claude/skills/idea-review-panel"
+        "code": "git clone \\\n  https://github.com/TED-H-com/claude-idea-review-skill.git \\\n  ~/.claude/skills/idea-review-panel"
       },
       {
         "title": {
@@ -471,15 +471,15 @@
   ],
   "links": [
     {
-      "href": "https://github.com/teddashh/claude-idea-review-skill/blob/main/README.zh-TW.md",
+      "href": "https://github.com/TED-H-com/claude-idea-review-skill/blob/main/README.zh-TW.md",
       "label": "中文 README"
     },
     {
-      "href": "https://github.com/teddashh/claude-idea-review-skill/blob/main/SKILL.md",
+      "href": "https://github.com/TED-H-com/claude-idea-review-skill/blob/main/SKILL.md",
       "label": "SKILL.md"
     },
     {
-      "href": "https://teddashh.github.io/ai-brainstorming/",
+      "href": "https://ted-h-com.github.io/ai-brainstorming/",
       "label": {
         "en": "Sibling: ai-brainstorming",
         "zh": "姊妹專案 ai-brainstorming"

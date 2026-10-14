@@ -4,7 +4,7 @@
 
 A Claude Code skill that pressure-tests an idea over 5, 12, or 16 rounds of structured debate and saves a verdict with a printable report.
 
-**Project page:** https://teddashh.github.io/claude-idea-review-skill/
+**Project page:** https://ted-h-com.github.io/claude-idea-review-skill/
 
 An open-source skill for the **Personal IP Co-Building / Coaching Program** (個人 IP 陪跑計畫) and the **自由工坊 Discord community**. License: MIT.
 
@@ -84,13 +84,13 @@ Clone it into your personal skills folder:
 
 ```bash
 # macOS / Linux
-git clone https://github.com/teddashh/claude-idea-review-skill.git \
+git clone https://github.com/TED-H-com/claude-idea-review-skill.git \
   ~/.claude/skills/idea-review-panel
 ```
 
 ```powershell
 # Windows (PowerShell)
-git clone https://github.com/teddashh/claude-idea-review-skill.git `
+git clone https://github.com/TED-H-com/claude-idea-review-skill.git `
   "$env:USERPROFILE\.claude\skills\idea-review-panel"
 ```
 
@@ -161,7 +161,7 @@ Without `--smoke`, `check_providers.py` only reports which CLIs and key variable
 
 ## Related project
 
-[ai-brainstorming](https://github.com/teddashh/ai-brainstorming) ([project page](https://teddashh.github.io/ai-brainstorming/)) is a web version of the same idea: the same 5, 12, or 16 rounds with a research, clash, and converge arc, but with five model seats called through OpenRouter, and a transcript that can be emailed when SMTP is configured. This skill runs inside your own Claude Code session and uses four personalities instead of model seats.
+[ai-brainstorming](https://github.com/TED-H-com/ai-brainstorming) ([project page](https://ted-h-com.github.io/ai-brainstorming/)) is a web version of the same idea: the same 5, 12, or 16 rounds with a research, clash, and converge arc, but with five model seats called through OpenRouter, and a transcript that can be emailed when SMTP is configured. This skill runs inside your own Claude Code session and uses four personalities instead of model seats.
 
 ## License
 
