@@ -4,7 +4,7 @@
 
 一個 Claude Code skill：用 5、12 或 16 輪有結構的辯論挑戰你的點子，最後留下結論與可列印的報告。
 
-**專案介紹頁：** https://teddashh.github.io/claude-idea-review-skill/?lang=zh-TW
+**專案介紹頁：** https://ted-h-com.github.io/claude-idea-review-skill/?lang=zh-TW
 
 這是 **個人 IP 陪跑計畫** 與 **「自由工坊」Discord 社群** 的開源 Claude Code skill，授權：MIT。
 
@@ -161,7 +161,7 @@ python3 "$SKILL/scripts/render_report.py" .idea-review/<資料夾名稱>
 
 ## 相關專案
 
-[ai-brainstorming](https://github.com/teddashh/ai-brainstorming)（[專案介紹頁](https://teddashh.github.io/ai-brainstorming/?lang=zh-TW)）是同一個想法的網頁版：一樣是 5、12、16 輪，一樣走研究立論、互相攻防、漸進收斂的流程，但它透過 OpenRouter 呼叫五個模型席位，有設定 SMTP 時還能用 email 寄出完整紀錄。這個 skill 則在你自己的 Claude Code session 裡執行，用四種思考個性取代模型席位。
+[ai-brainstorming](https://github.com/teddashh/ai-brainstorming)（[專案介紹頁](https://ted-h-com.github.io/ai-brainstorming/?lang=zh-TW)）是同一個想法的網頁版：一樣是 5、12、16 輪，一樣走研究立論、互相攻防、漸進收斂的流程，但它透過 OpenRouter 呼叫五個模型席位，有設定 SMTP 時還能用 email 寄出完整紀錄。這個 skill 則在你自己的 Claude Code session 裡執行，用四種思考個性取代模型席位。
 
 ## 授權
 

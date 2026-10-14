@@ -271,8 +271,8 @@
           "zh": "用思考個性，而不是模型席位"
         },
         "body": {
-          "en": "The web version, <a href=\"https://teddashh.github.io/ai-brainstorming/\">ai-brainstorming</a>, gives five models a seat each through OpenRouter. Inside Claude Code, four personalities need no extra accounts, and other providers are used only when their CLI answers or you give a key.",
-          "zh": "網頁版的 <a href=\"https://teddashh.github.io/ai-brainstorming/?lang=zh-TW\">ai-brainstorming</a> 透過 OpenRouter 讓五個模型各坐一席。在 Claude Code 裡，四種思考個性不需要額外帳號，其他 provider 只在 CLI 能回應或你提供 key 時才會用到。"
+          "en": "The web version, <a href=\"https://ted-h-com.github.io/ai-brainstorming/\">ai-brainstorming</a>, gives five models a seat each through OpenRouter. Inside Claude Code, four personalities need no extra accounts, and other providers are used only when their CLI answers or you give a key.",
+          "zh": "網頁版的 <a href=\"https://ted-h-com.github.io/ai-brainstorming/?lang=zh-TW\">ai-brainstorming</a> 透過 OpenRouter 讓五個模型各坐一席。在 Claude Code 裡，四種思考個性不需要額外帳號，其他 provider 只在 CLI 能回應或你提供 key 時才會用到。"
         }
       },
       {
@@ -479,7 +479,7 @@
       "label": "SKILL.md"
     },
     {
-      "href": "https://teddashh.github.io/ai-brainstorming/",
+      "href": "https://ted-h-com.github.io/ai-brainstorming/",
       "label": {
         "en": "Sibling: ai-brainstorming",
         "zh": "姊妹專案 ai-brainstorming"
