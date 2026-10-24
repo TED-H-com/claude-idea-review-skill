@@ -53,6 +53,17 @@ What `SKILL.md` tells Claude to do with the result:
 
 Two caveats come from the script itself. `agy -p` can exit 0 with empty output when it is not attached to a terminal, so a failed Antigravity smoke test is inconclusive. When the `gemini` CLI is found but does not answer, the script adds a hint that Google moved its free, Pro, and Ultra consumer tiers to Antigravity in 2026, and that the Gemini CLI still works with a paid `GEMINI_API_KEY` or an Enterprise or Code Assist license.
 
+## Review Criteria & Evaluation Rubrics
+
+The panel evaluates your idea based on 5 core criteria: **Problem-Solution Fit**, **Market Demand**, **Execution**, **Differentiation**, and **Business Model**.
+
+The final confidence score maps to a clear verdict:
+
+- **80-100 (`worth_building`):** Strong signal across all criteria. Clear path to MVP and first revenue.
+- **60-79 (`validate_first`):** Good potential, but relies on risky assumptions. Needs a low-cost test before building.
+- **40-59 (`pivot`):** Core problem exists, but the solution or market segment is flawed. Needs significant adjustment.
+- **0-39 (`not_worth_building`):** Fatal flaws in demand, feasibility, or economics. Better to kill the idea.
+
 ## Outputs
 
 Each run gets its own folder under `.idea-review/`, in the directory where the review runs:
@@ -117,6 +128,14 @@ Ask Claude Code to validate an idea. The skill triggers from its description:
 English works too, for example `Validate this idea: <your idea>`. You can also call it directly with `/idea-review-panel`.
 
 The default is 5 rounds; ask for 12 or 16 for a deeper review. A Chinese request gets a Traditional Chinese review by default; otherwise the review follows your language. When it finishes, Claude replies with the verdict summary and the file paths.
+
+## Usage Examples
+
+You can provide a one-line idea or a detailed context. Here are some examples:
+
+- **Software / SaaS:** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
+- **Content / Creator:** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
+- **Community / Business:** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
 
 ## Helper scripts
 
