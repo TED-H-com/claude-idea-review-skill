@@ -53,6 +53,17 @@ review 的內容是 Claude 依照 `SKILL.md` 寫出來的。三個 Python script
 
 script 本身還註明了兩件事。`agy -p` 在沒有接終端機時，可能以結束碼 0 結束卻沒有任何輸出，所以 Antigravity 測試失敗不一定代表帳號不能用。找到 `gemini` CLI 卻沒有回應時，script 會附上提示：Google 在 2026 年把免費、Pro、Ultra 等消費者方案移到 Antigravity，Gemini CLI 仍可搭配付費的 `GEMINI_API_KEY`，或 Enterprise、Code Assist 授權使用。
 
+## 審查標準與評估量表
+
+陪跑小組會根據 5 個核心標準來評估你的點子：**問題解決契合度** (Problem-Solution Fit)、**市場需求** (Market Demand)、**執行力** (Execution)、**差異化** (Differentiation) 以及 **商業模式** (Business Model)。
+
+最終的信心分數對應明確的結論：
+
+- **80-100 (`worth_building`)：** 所有標準都顯示強烈訊號。有明確的 MVP 與獲得第一筆收入的路徑。
+- **60-79 (`validate_first`)：** 潛力不錯，但依賴高風險假設。在投入開發前，需要先進行低成本的驗證。
+- **40-59 (`pivot`)：** 核心問題存在，但解決方案或市場區隔有缺陷。需要大幅調整。
+- **0-39 (`not_worth_building`)：** 在需求、可行性或單位經濟學上有致命缺陷。最好直接放棄這個點子。
+
 ## 輸出
 
 每次執行都會在 review 執行目錄底下的 `.idea-review/` 建立一個資料夾：
@@ -117,6 +128,14 @@ git -C ~/.claude/skills/idea-review-panel pull
 用英文問也行，例如 `Validate this idea: <your idea>`。另外也可以用 `/idea-review-panel` 直接呼叫。
 
 預設 5 輪；想更深入可以要求 12 或 16 輪。用中文提問時，預設以繁體中文進行；其他語言則跟著你的語言。完成後，Claude 會回覆結論摘要與檔案路徑。
+
+## 使用範例
+
+你可以提供一句話的點子，或是詳細的背景資訊。以下是一些範例：
+
+- **軟體 / SaaS：** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
+- **內容 / 創作者：** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
+- **社群 / 商業：** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
 
 ## 輔助 scripts
 

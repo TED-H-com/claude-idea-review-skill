@@ -128,6 +128,31 @@ Final round: convergence.
 - Each personality must commit to build / validate / pivot / stop.
 - Synthesizer must name the deciding assumption.
 
+## Usage Examples
+
+When the user asks for a review, they can provide a one-line idea or a detailed context. Here are some examples to guide them:
+
+- **Software / SaaS:** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
+- **Content / Creator:** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
+- **Community / Business:** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
+
+## Review Criteria & Evaluation Rubrics
+
+The panel evaluates the idea across 5 core criteria:
+
+1. **Problem-Solution Fit:** Does the proposed solution effectively address a real, painful problem?
+2. **Market Demand:** Is there a sizable, reachable market willing to pay for this?
+3. **Execution:** Can this specific team (or the user) realistically build and distribute this with current constraints?
+4. **Differentiation:** How does it stand out against existing alternatives or the status quo?
+5. **Business Model:** Is there a clear, viable path to revenue and sustainability?
+
+The final verdict and confidence score are mapped to this rubric:
+
+- **80-100 (`worth_building`):** Strong signal across all criteria. Clear path to MVP and first revenue. Minimal critical assumptions left unvalidated.
+- **60-79 (`validate_first`):** Good potential, but relies on 1-2 risky assumptions (e.g., willing to pay, technical feasibility). Needs a specific, low-cost test before full build.
+- **40-59 (`pivot`):** Core problem exists, but the current solution, market segment, or distribution channel is flawed. Needs significant adjustment.
+- **0-39 (`not_worth_building`):** Fatal flaws in demand, feasibility, or unit economics. Better to kill the idea and move on.
+
 ## Final Report
 
 `final.md` must include:
