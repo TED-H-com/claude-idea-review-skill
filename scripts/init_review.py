@@ -9,6 +9,16 @@ from datetime import datetime
 from pathlib import Path
 
 
+def sanitize_idea(text: str) -> str:
+    """Sanitize the idea text to prevent prompt injection and context escape."""
+    text = text.strip()
+    # Escape markdown headings to prevent injecting fake sections
+    text = re.sub(r"^(#+)\s", r"\\\1 ", text, flags=re.MULTILINE)
+    # Neutralize XML-like tags to prevent system prompt / context escape
+    text = re.sub(r"<(/?[a-zA-Z_][^>]*)>", r"&lt;\1&gt;", text)
+    return text
+
+
 def slugify(text: str) -> str:
     words = re.findall(r"[A-Za-z0-9\u4e00-\u9fff]+", text.lower())
     slug = "-".join(words[:8]).strip("-")
@@ -27,8 +37,9 @@ def main() -> None:
     rounds_dir = root / "rounds"
     rounds_dir.mkdir(parents=True, exist_ok=False)
 
+    safe_idea = sanitize_idea(args.idea)
     (root / "input.md").write_text(
-        f"# Original Idea\n\n{args.idea.strip()}\n\n## Research Summary\n\n",
+        f"# Original Idea\n\n{safe_idea}\n\n## Research Summary\n\n",
         encoding="utf-8",
     )
     for n in range(1, args.rounds + 1):
