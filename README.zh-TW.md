@@ -136,25 +136,61 @@ git -C ~/.claude/skills/idea-review-panel pull
 - **軟體 / SaaS：** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
 - **內容 / 創作者：** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
 - **社群 / 商業：** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
+- **12 輪：** "幫我驗證這個點子，跑 12 輪：一個提醒人們喝水的手機 App，會顯示一盆快枯萎的植物。"
+- **16 輪：** "幫我驗證這個點子，跑 16 輪：一個直接從農民採購珍稀咖啡豆的訂閱盒服務。"
 
-## 輔助 scripts
+## 核心模組與 API 規格
 
-skill 會自動執行這些 scripts。想手動執行的話，請用安裝後的路徑，並在你希望 `.idea-review/` 出現的資料夾裡執行（Windows 上把 `python3` 換成 `python`）：
+skill 會自動執行這些輔助 scripts。想手動執行的話，請用安裝後的路徑，並在你希望 `.idea-review/` 出現的資料夾裡執行（Windows 上把 `python3` 換成 `python`）。
 
+### 1. `check_providers.py`
+
+檢查哪些選配的 provider CLI 已經安裝而且能回應。
+
+**輸入：**
+- `--smoke` (選填)：對每個找到的 CLI 送出一句很短的提示（"Reply OK only."）。
+
+**輸出：**
+- 印出包含各 provider 狀態、CLI 是否存在以及相關環境變數的 `ProviderStatus` JSON 陣列。
+
+**範例：**
 ```bash
-SKILL=~/.claude/skills/idea-review-panel
-
-# 哪些 provider 已安裝、能回應（會對每個找到的 CLI 送出一句提示）
-python3 "$SKILL/scripts/check_providers.py" --smoke
-
-# 建立 review 資料夾：--rounds 只接受 5、12、16；--out 可以改上層資料夾
-python3 "$SKILL/scripts/init_review.py" --idea "你的點子" --rounds 5
-
-# 從 review 資料夾產生 report.md 與 report.html
-python3 "$SKILL/scripts/render_report.py" .idea-review/<資料夾名稱>
+python3 ~/.claude/skills/idea-review-panel/scripts/check_providers.py --smoke
 ```
 
-不加 `--smoke` 時，`check_providers.py` 只回報有哪些 CLI 與 key 變數，不會送出任何提示。
+### 2. `init_review.py`
+
+建立一個確定性的 review 工作資料夾。
+
+**輸入：**
+- `--idea` (必填)：要驗證的點子原文。
+- `--rounds` (選填)：辯論的輪數（接受：5、12、16；預設：5）。
+- `--out` (選填)：輸出的上層資料夾（預設：`.idea-review`）。
+
+**輸出：**
+- 建立一個包含 `input.md`、`final.md` 與包含各輪檔案的 `rounds/` 資料夾。
+- 印出產生出來的工作資料夾的絕對路徑。
+
+**範例：**
+```bash
+python3 ~/.claude/skills/idea-review-panel/scripts/init_review.py --idea "你的點子" --rounds 5
+```
+
+### 3. `render_report.py`
+
+將 review 工作資料夾轉譯為 `report.md` 與可列印的 `report.html`。
+
+**輸入：**
+- `workspace` (位置參數)：包含 `input.md`、`rounds/` 與 `final.md` 的 review 工作資料夾路徑。
+
+**輸出：**
+- 寫出 `report.md` 與 `report.html` 到指定的工作資料夾中。
+- 印出產生出來的 `report.html` 絕對路徑。
+
+**範例：**
+```bash
+python3 ~/.claude/skills/idea-review-panel/scripts/render_report.py .idea-review/<資料夾名稱>
+```
 
 ## 最終結論格式
 

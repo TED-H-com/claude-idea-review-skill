@@ -13,6 +13,7 @@ from dataclasses import asdict, dataclass
 
 @dataclass
 class ProviderStatus:
+    """Represents the availability and status of an AI provider CLI."""
     provider: str
     cli: str | None
     cli_found: bool
@@ -23,6 +24,17 @@ class ProviderStatus:
 
 
 def run_smoke(cmd: list[str], stdin: str | None = None, timeout: int = 45) -> tuple[bool, str]:
+    """Run a tiny prompt through a CLI to verify it can answer.
+
+    Args:
+        cmd: The command and its arguments to run.
+        stdin: Optional input to send to the command via stdin.
+        timeout: Maximum seconds to wait for the command to finish.
+
+    Returns:
+        A tuple containing a boolean indicating success (exit code 0 and non-empty stdout)
+        and the last 500 characters of the combined stdout and stderr output.
+    """
     try:
         res = subprocess.run(
             cmd,
@@ -40,10 +52,26 @@ def run_smoke(cmd: list[str], stdin: str | None = None, timeout: int = 45) -> tu
 
 
 def env_present(names: list[str]) -> list[str]:
+    """Check which environment variables from a given list are currently set.
+
+    Args:
+        names: List of environment variable names to check.
+
+    Returns:
+        A list of environment variable names that are present and not empty.
+    """
     return [name for name in names if os.environ.get(name)]
 
 
 def check_codex(smoke: bool) -> ProviderStatus:
+    """Check the availability of the Codex CLI and relevant API keys.
+
+    Args:
+        smoke: Whether to run a smoke test if the CLI is found.
+
+    Returns:
+        A ProviderStatus object containing the check results.
+    """
     cli = shutil.which("codex")
     smoke_ok: bool | None = None
     note = "not checked"
@@ -63,6 +91,14 @@ def check_codex(smoke: bool) -> ProviderStatus:
 
 
 def check_gemini(smoke: bool) -> ProviderStatus:
+    """Check the availability of the Antigravity (agy) or Gemini CLI and relevant API keys.
+
+    Args:
+        smoke: Whether to run a smoke test if the CLI is found.
+
+    Returns:
+        A ProviderStatus object containing the check results.
+    """
     cli = shutil.which("agy") or shutil.which("gemini")
     smoke_ok: bool | None = None
     note = "not checked"
@@ -96,6 +132,14 @@ def check_gemini(smoke: bool) -> ProviderStatus:
 
 
 def check_grok(smoke: bool) -> ProviderStatus:
+    """Check the availability of the Grok CLI and relevant API keys.
+
+    Args:
+        smoke: Whether to run a smoke test if the CLI is found.
+
+    Returns:
+        A ProviderStatus object containing the check results.
+    """
     cli = shutil.which("grok")
     smoke_ok: bool | None = None
     note = "not checked"
@@ -118,6 +162,7 @@ def check_grok(smoke: bool) -> ProviderStatus:
 
 
 def main() -> None:
+    """Parse arguments and print the JSON status array for all providers."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--smoke", action="store_true", help="Run a tiny prompt through found CLIs.")
     args = parser.parse_args()

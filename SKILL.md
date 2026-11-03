@@ -135,6 +135,8 @@ When the user asks for a review, they can provide a one-line idea or a detailed 
 - **Software / SaaS:** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
 - **Content / Creator:** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
 - **Community / Business:** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
+- **12 Rounds:** "Validate this idea in 12 rounds: A mobile app that reminds people to drink water by showing a sad plant."
+- **16 Rounds:** "Validate this idea in 16 rounds: A subscription box for exotic coffee beans sourced directly from farmers."
 
 ## Review Criteria & Evaluation Rubrics
 
