@@ -136,25 +136,61 @@ You can provide a one-line idea or a detailed context. Here are some examples:
 - **Software / SaaS:** "Validate this idea: A Notion-like workspace specifically for lawyers, focusing on secure document management and case linking."
 - **Content / Creator:** "幫我驗證這個點子：一個專門教非工程師用 AI 工具自動化日常工作的 YouTube 頻道，一開始先做 Notion 和 Zapier 教學。"
 - **Community / Business:** "Validate this idea: A paid Discord community for indie hackers building micro-SaaS, offering weekly teardowns and accountability groups."
+- **12 Rounds:** "Validate this idea in 12 rounds: A mobile app that reminds people to drink water by showing a sad plant."
+- **16 Rounds:** "Validate this idea in 16 rounds: A subscription box for exotic coffee beans sourced directly from farmers."
 
-## Helper scripts
+## Core Modules & API Specifications
 
-The skill runs these for you. To run them by hand, use the installed path, and run them from the folder where `.idea-review/` should appear (on Windows, use `python` instead of `python3`):
+The skill runs these helper scripts for you. To run them by hand, use the installed path, and run them from the folder where `.idea-review/` should appear (on Windows, use `python` instead of `python3`).
 
+### 1. `check_providers.py`
+
+Checks which optional provider CLIs are installed and answering.
+
+**Inputs:**
+- `--smoke` (optional): Sends a tiny prompt ("Reply OK only.") to each CLI found.
+
+**Outputs:**
+- Prints a JSON array of `ProviderStatus` objects describing each provider's status, CLI presence, and key environment variables.
+
+**Example:**
 ```bash
-SKILL=~/.claude/skills/idea-review-panel
-
-# Which providers are installed and answering (sends one short prompt to each CLI found)
-python3 "$SKILL/scripts/check_providers.py" --smoke
-
-# Create a review folder: --rounds accepts 5, 12, or 16; --out changes the base folder
-python3 "$SKILL/scripts/init_review.py" --idea "your idea" --rounds 5
-
-# Render report.md and report.html from a review folder
-python3 "$SKILL/scripts/render_report.py" .idea-review/<folder>
+python3 ~/.claude/skills/idea-review-panel/scripts/check_providers.py --smoke
 ```
 
-Without `--smoke`, `check_providers.py` only reports which CLIs and key variables exist, and sends no prompt.
+### 2. `init_review.py`
+
+Creates a deterministic workspace for an idea review panel run.
+
+**Inputs:**
+- `--idea` (required): The raw idea text to review.
+- `--rounds` (optional): Number of rounds (choices: 5, 12, 16; default: 5).
+- `--out` (optional): Base output directory (default: `.idea-review`).
+
+**Outputs:**
+- Creates a structured directory with `input.md`, `final.md`, and a `rounds/` folder containing the specified number of round files.
+- Prints the absolute path to the generated workspace folder.
+
+**Example:**
+```bash
+python3 ~/.claude/skills/idea-review-panel/scripts/init_review.py --idea "your idea" --rounds 5
+```
+
+### 3. `render_report.py`
+
+Renders an idea review workspace into `report.md` and printable `report.html`.
+
+**Inputs:**
+- `workspace` (positional): The path to the review workspace containing `input.md`, `rounds/`, and `final.md`.
+
+**Outputs:**
+- Writes `report.md` and `report.html` into the specified workspace directory.
+- Prints the absolute path to the generated `report.html`.
+
+**Example:**
+```bash
+python3 ~/.claude/skills/idea-review-panel/scripts/render_report.py .idea-review/<folder>
+```
 
 ## Final verdict format
 

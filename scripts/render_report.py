@@ -11,6 +11,17 @@ from pathlib import Path
 
 
 def read(path: Path) -> str:
+    """Read and strip text from a file.
+
+    Args:
+        path: Path to the file.
+
+    Returns:
+        The stripped text content of the file.
+
+    Raises:
+        SystemExit: If the file is not found.
+    """
     try:
         return path.read_text(encoding="utf-8").strip()
     except FileNotFoundError:
@@ -18,6 +29,14 @@ def read(path: Path) -> str:
 
 
 def inline_markdown(text: str) -> str:
+    """Parse and convert basic inline Markdown to HTML.
+
+    Args:
+        text: The raw markdown text.
+
+    Returns:
+        HTML string with properly escaped text and converted inline tags (code, strong, em, links).
+    """
     escaped = html.escape(text)
     escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
     escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
@@ -31,6 +50,14 @@ def inline_markdown(text: str) -> str:
 
 
 def simple_markdown(md: str) -> str:
+    """Convert simple block Markdown to HTML.
+
+    Args:
+        md: The raw block markdown text.
+
+    Returns:
+        HTML string with converted block tags (hr, h1-h4, ul, ol, p).
+    """
     lines = md.splitlines()
     out: list[str] = []
     paragraph: list[str] = []
@@ -96,6 +123,14 @@ def simple_markdown(md: str) -> str:
 
 
 def build_report_md(root: Path) -> str:
+    """Combine input, round, and final files into a single Markdown report.
+
+    Args:
+        root: The root path of the review workspace.
+
+    Returns:
+        The combined markdown content string.
+    """
     input_md = read(root / "input.md")
     final_md = read(root / "final.md")
     round_parts = []
@@ -105,6 +140,15 @@ def build_report_md(root: Path) -> str:
 
 
 def build_report_html(report_md: str, title: str) -> str:
+    """Render the combined Markdown report into a complete HTML document.
+
+    Args:
+        report_md: The combined markdown report content.
+        title: The title for the HTML document.
+
+    Returns:
+        The full HTML document string.
+    """
     body = simple_markdown(report_md)
     safe_title = html.escape(title)
     return f"""<!doctype html>
@@ -200,6 +244,7 @@ def build_report_html(report_md: str, title: str) -> str:
 
 
 def main() -> None:
+    """Parse arguments and render the review workspace into Markdown and HTML reports."""
     parser = argparse.ArgumentParser()
     parser.add_argument("workspace", help="Review workspace containing input.md, rounds/, final.md")
     args = parser.parse_args()

@@ -10,7 +10,14 @@ from pathlib import Path
 
 
 def sanitize_idea(text: str) -> str:
-    """Sanitize the idea text to prevent prompt injection and context escape."""
+    """Sanitize the idea text to prevent prompt injection and context escape.
+
+    Args:
+        text: The raw idea text.
+
+    Returns:
+        The sanitized idea text with neutralized markdown headings and XML tags.
+    """
     text = text.strip()
     # Escape markdown headings to prevent injecting fake sections
     text = re.sub(r"^(#+)\s", r"\\\1 ", text, flags=re.MULTILINE)
@@ -20,12 +27,21 @@ def sanitize_idea(text: str) -> str:
 
 
 def slugify(text: str) -> str:
+    """Create a URL-safe slug from the first few words of the text, preserving CJK characters.
+
+    Args:
+        text: The text to slugify.
+
+    Returns:
+        A hyphen-separated slug, truncated to 64 characters, or 'idea-review' if empty.
+    """
     words = re.findall(r"[A-Za-z0-9\u4e00-\u9fff]+", text.lower())
     slug = "-".join(words[:8]).strip("-")
     return slug[:64] or "idea-review"
 
 
 def main() -> None:
+    """Parse arguments and create the initial directory structure for an idea review."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--idea", required=True, help="The raw idea text to review.")
     parser.add_argument("--rounds", type=int, default=5, choices=[5, 12, 16])
