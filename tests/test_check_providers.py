@@ -162,3 +162,10 @@ def test_main(mock_check_grok, mock_check_gemini, mock_check_codex, capsys):
     mock_check_codex.assert_called_once_with(True)
     mock_check_gemini.assert_called_once_with(True)
     mock_check_grok.assert_called_once_with(True)
+
+@patch("check_providers.subprocess.run")
+def test_run_smoke_exception(mock_run):
+    mock_run.side_effect = Exception("test exception")
+    success, output = check_providers.run_smoke(["dummy"], timeout=10)
+    assert success is False
+    assert output == "test exception"

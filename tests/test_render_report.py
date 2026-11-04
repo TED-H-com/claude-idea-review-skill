@@ -102,3 +102,13 @@ def test_main_with_real_tmp_path(tmp_path, capsys):
 
     captured = capsys.readouterr()
     assert str(tmp_path / "report.html") in captured.out
+
+def test_simple_markdown_list_transitions():
+    md = """- Bullet 1
+1. Item 1
+- Bullet 2"""
+    html = render_report.simple_markdown(md)
+
+    assert "<ul>\n<li>Bullet 1</li>\n</ul>" in html
+    assert "<ol>\n<li>Item 1</li>\n</ol>" in html
+    assert "<ul>\n<li>Bullet 2</li>\n</ul>" in html

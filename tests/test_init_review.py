@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import subprocess
 import sys
 from pathlib import Path
@@ -152,3 +153,19 @@ def test_sanitize_idea():
 
     # Test standard text remains unaffected
     assert init_review.sanitize_idea("Just a normal < idea") == "Just a normal < idea" # Doesn't match regex <tag>
+@patch("sys.argv", ["init_review.py", "--idea", "test idea from argv", "--rounds", "5"])
+def test_main_direct(tmp_path, capsys):
+    with patch("sys.argv", ["init_review.py", "--idea", "test idea from argv", "--rounds", "5", "--out", str(tmp_path)]):
+        init_review.main()
+
+    captured = capsys.readouterr()
+    workspace_dir = Path(captured.out.strip())
+
+    assert workspace_dir.exists()
+    assert (workspace_dir / "input.md").exists()
+    assert (workspace_dir / "rounds").is_dir()
+    assert (workspace_dir / "final.md").exists()
+
+    for n in range(1, 6):
+        round_file = workspace_dir / "rounds" / f"round-{n:02d}.md"
+        assert round_file.exists()
