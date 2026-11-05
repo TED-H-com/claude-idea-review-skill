@@ -1,9 +1,10 @@
+from unittest.mock import MagicMock
+from unittest.mock import patch
 import sys
 from pathlib import Path
 import json
 import pytest
 import os
-from unittest.mock import patch, MagicMock
 
 # Add scripts directory to path to allow importing check_providers
 sys.path.insert(0, str(Path("scripts").resolve()))
@@ -162,3 +163,29 @@ def test_main(mock_check_grok, mock_check_gemini, mock_check_codex, capsys):
     mock_check_codex.assert_called_once_with(True)
     mock_check_gemini.assert_called_once_with(True)
     mock_check_grok.assert_called_once_with(True)
+
+@patch("check_providers.subprocess.run")
+def test_run_smoke_exception(mock_run):
+    mock_run.side_effect = Exception("Test Exception")
+    success, note = check_providers.run_smoke(["dummy"])
+    assert success is False
+    assert note == "Test Exception"
+
+
+def test_check_providers_main_unit(capsys):
+    test_args = ["check_providers.py", "--smoke"]
+    with patch("sys.argv", test_args):
+        with patch("check_providers.check_codex") as mock_codex, \
+             patch("check_providers.check_gemini") as mock_gemini, \
+             patch("check_providers.check_grok") as mock_grok:
+
+            mock_codex.return_value = check_providers.ProviderStatus("codex", "/usr/bin/codex", True, True, [], False, "ok")
+            mock_gemini.return_value = check_providers.ProviderStatus("gemini", "/usr/bin/agy", True, True, [], False, "ok")
+            mock_grok.return_value = check_providers.ProviderStatus("grok", "/usr/bin/grok", True, True, [], False, "ok")
+
+            check_providers.main()
+
+    captured = capsys.readouterr()
+    assert "codex" in captured.out
+    assert "gemini" in captured.out
+    assert "grok" in captured.out

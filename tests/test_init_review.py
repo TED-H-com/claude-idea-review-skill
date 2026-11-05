@@ -1,3 +1,5 @@
+from unittest.mock import patch
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -152,3 +154,11 @@ def test_sanitize_idea():
 
     # Test standard text remains unaffected
     assert init_review.sanitize_idea("Just a normal < idea") == "Just a normal < idea" # Doesn't match regex <tag>
+
+
+def test_init_review_main_unit(tmp_path):
+    test_args = ["init_review.py", "--idea", "test idea unit", "--out", str(tmp_path)]
+    with patch("sys.argv", test_args):
+        init_review.main()
+
+    assert any((tmp_path / d).is_dir() for d in os.listdir(tmp_path) if "test-idea-unit" in str(d))
