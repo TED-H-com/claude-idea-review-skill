@@ -1,7 +1,7 @@
+from unittest.mock import patch
 import sys
 from pathlib import Path
 import pytest
-from unittest.mock import patch, mock_open
 
 sys.path.insert(0, str(Path("scripts").resolve()))
 import render_report
@@ -95,6 +95,35 @@ def test_main_with_real_tmp_path(tmp_path, capsys):
     (rounds_dir / "round-01.md").write_text("round 1", encoding="utf-8")
 
     with patch("sys.argv", ["render_report.py", str(tmp_path)]):
+        render_report.main()
+
+    assert (tmp_path / "report.md").exists()
+    assert (tmp_path / "report.html").exists()
+
+    captured = capsys.readouterr()
+    assert str(tmp_path / "report.html") in captured.out
+
+def test_simple_markdown_switch_lists():
+    md = """1. Item 1
+- Bullet 1"""
+    html = render_report.simple_markdown(md)
+    assert "<ol>\n<li>Item 1</li>\n</ol>\n<ul>\n<li>Bullet 1</li>\n</ul>" in html
+
+    md2 = """- Bullet 1
+1. Item 1"""
+    html2 = render_report.simple_markdown(md2)
+    assert "<ul>\n<li>Bullet 1</li>\n</ul>\n<ol>\n<li>Item 1</li>\n</ol>" in html2
+
+
+def test_render_report_main_unit(tmp_path, capsys):
+    (tmp_path / "input.md").write_text("input", encoding="utf-8")
+    (tmp_path / "final.md").write_text("final", encoding="utf-8")
+    rounds_dir = tmp_path / "rounds"
+    rounds_dir.mkdir()
+    (rounds_dir / "round-01.md").write_text("round 1", encoding="utf-8")
+
+    test_args = ["render_report.py", str(tmp_path)]
+    with patch("sys.argv", test_args):
         render_report.main()
 
     assert (tmp_path / "report.md").exists()

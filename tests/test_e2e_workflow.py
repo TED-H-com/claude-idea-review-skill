@@ -69,3 +69,9 @@ def test_full_workflow_simulation():
         assert "This is the best idea ever. It will save creators hundreds of hours." in report_html_content
         assert "Verdict: validate_first" in report_html_content
         assert "Build a basic silence-cutter MVP to validate demand" in report_html_content
+
+def test_check_providers_main_real_subprocess():
+    # Make sure we run the script so it exits 0 normally
+    # and the coverage hook catches it.
+    result = subprocess.run([sys.executable, str(Path("scripts/check_providers.py").resolve()), "--smoke"], capture_output=True, text=True)
+    assert result.returncode == 0
