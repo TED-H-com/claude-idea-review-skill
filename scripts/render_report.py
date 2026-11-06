@@ -17,16 +17,23 @@ def read(path: Path) -> str:
         raise SystemExit(f"missing required file: {path}") from None
 
 
+_CODE_RE = re.compile(r"`([^`]+)`")
+_STRONG_RE = re.compile(r"\*\*([^*]+)\*\*")
+_EM_RE = re.compile(r"\*([^*]+)\*")
+_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+)\)")
+
+_HR_RE = re.compile(r"^-{3,}$")
+_HEADING_RE = re.compile(r"^(#{1,3})\s+(.+)$")
+_BULLET_RE = re.compile(r"^[-*]\s+(.+)$")
+_ORDERED_RE = re.compile(r"^\d+[.)]\s+(.+)$")
+
+
 def inline_markdown(text: str) -> str:
     escaped = html.escape(text)
-    escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
-    escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
-    escaped = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", escaped)
-    escaped = re.sub(
-        r"\[([^\]]+)\]\((https?://[^)\s]+)\)",
-        r'<a href="\2">\1</a>',
-        escaped,
-    )
+    escaped = _CODE_RE.sub(r"<code>\1</code>", escaped)
+    escaped = _STRONG_RE.sub(r"<strong>\1</strong>", escaped)
+    escaped = _EM_RE.sub(r"<em>\1</em>", escaped)
+    escaped = _LINK_RE.sub(r'<a href="\2">\1</a>', escaped)
     return escaped
 
 
@@ -44,30 +51,30 @@ def simple_markdown(md: str) -> str:
             in_list = False
     
     def close_paragraph() -> None:
-        nonlocal paragraph
         if paragraph:
             out.append(f"<p>{inline_markdown(' '.join(paragraph))}</p>")
-            paragraph = []
+            paragraph.clear()
 
     for raw in lines:
         line = raw.rstrip()
-        if not line.strip():
+        stripped = line.strip()
+        if not stripped:
             close_paragraph()
             close_list()
             continue
-        if re.match(r"^-{3,}$", line.strip()):
+        if _HR_RE.match(stripped):
             close_paragraph()
             close_list()
             out.append("<hr>")
             continue
-        heading = re.match(r"^(#{1,3})\s+(.+)$", line)
+        heading = _HEADING_RE.match(line)
         if heading:
             close_paragraph()
             close_list()
             level = min(len(heading.group(1)) + 1, 4)
             out.append(f"<h{level}>{inline_markdown(heading.group(2))}</h{level}>")
             continue
-        bullet = re.match(r"^[-*]\s+(.+)$", line)
+        bullet = _BULLET_RE.match(line)
         if bullet:
             close_paragraph()
             if in_list and list_tag != "ul":
@@ -78,7 +85,7 @@ def simple_markdown(md: str) -> str:
                 list_tag = "ul"
             out.append(f"<li>{inline_markdown(bullet.group(1))}</li>")
             continue
-        ordered = re.match(r"^\d+[.)]\s+(.+)$", line)
+        ordered = _ORDERED_RE.match(line)
         if ordered:
             close_paragraph()
             if in_list and list_tag != "ol":
@@ -89,7 +96,7 @@ def simple_markdown(md: str) -> str:
                 list_tag = "ol"
             out.append(f"<li>{inline_markdown(ordered.group(1))}</li>")
             continue
-        paragraph.append(line.strip())
+        paragraph.append(stripped)
     close_paragraph()
     close_list()
     return "\n".join(out)

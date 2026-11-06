@@ -7,6 +7,41 @@ import tempfile
 INIT_SCRIPT = Path("scripts/init_review.py").resolve()
 RENDER_SCRIPT = Path("scripts/render_report.py").resolve()
 
+def test_unit_performance_simple_markdown():
+    from scripts.render_report import simple_markdown
+
+    # Generate a large markdown string
+    # ~5000 lines of text with headings, lists, inline markdown
+    lines = []
+    for i in range(1000):
+        lines.append(f"## Heading {i}")
+        lines.append(f"This is a paragraph with **bold** and *italic* and `code` and a [link](http://example.com).")
+        lines.append(f"* List item 1")
+        lines.append(f"* List item 2")
+        lines.append(f"")
+
+    large_md = "\n".join(lines)
+
+    start_time = time.perf_counter()
+    _ = simple_markdown(large_md)
+    duration = time.perf_counter() - start_time
+
+    print(f"\nUnit Markdown rendering latency (5000 lines): {duration:.4f}s")
+
+
+def test_unit_performance_slugify():
+    from scripts.init_review import slugify
+
+    # Generate a large string for slugify
+    large_text = "This is a word " * 10000
+
+    start_time = time.perf_counter()
+    _ = slugify(large_text)
+    duration = time.perf_counter() - start_time
+
+    print(f"Unit Slugify latency (10000 words): {duration:.4f}s")
+
+
 def test_performance_benchmarks():
     with tempfile.TemporaryDirectory() as tmpdir:
         # Benchmark 1: Debate prompt generation latency (16 rounds)

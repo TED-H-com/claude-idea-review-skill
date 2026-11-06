@@ -9,18 +9,23 @@ from datetime import datetime
 from pathlib import Path
 
 
+_SANITIZE_HEADING_RE = re.compile(r"^(#+)\s", flags=re.MULTILINE)
+_SANITIZE_TAG_RE = re.compile(r"<(/?[a-zA-Z_][^>]*)>")
+_SLUGIFY_WORDS_RE = re.compile(r"[A-Za-z0-9\u4e00-\u9fff]+")
+
+
 def sanitize_idea(text: str) -> str:
     """Sanitize the idea text to prevent prompt injection and context escape."""
     text = text.strip()
     # Escape markdown headings to prevent injecting fake sections
-    text = re.sub(r"^(#+)\s", r"\\\1 ", text, flags=re.MULTILINE)
+    text = _SANITIZE_HEADING_RE.sub(r"\\\1 ", text)
     # Neutralize XML-like tags to prevent system prompt / context escape
-    text = re.sub(r"<(/?[a-zA-Z_][^>]*)>", r"&lt;\1&gt;", text)
+    text = _SANITIZE_TAG_RE.sub(r"&lt;\1&gt;", text)
     return text
 
 
 def slugify(text: str) -> str:
-    words = re.findall(r"[A-Za-z0-9\u4e00-\u9fff]+", text.lower())
+    words = _SLUGIFY_WORDS_RE.findall(text.lower())
     slug = "-".join(words[:8]).strip("-")
     return slug[:64] or "idea-review"
 
